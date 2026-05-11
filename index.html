@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bói Tình Yêu - boitinhyeu.vn</title>
+    <style>
+        :root { --pink: #ff1a75; --purple: #4b0082; }
+        body {
+            margin: 0; padding: 0; font-family: 'Arial', sans-serif;
+            background: #0d001a; color: #fff; overflow-x: hidden;
+        }
+        /* Nền hiệu ứng mây tím trôi giống video */
+        .bg-animated {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #0d001a, #330033);
+            z-index: -1; opacity: 0.8;
+        }
+        
+        /* Navbar màu hồng chuẩn trang gốc */
+        nav {
+            background: #ff1a75; height: 50px; display: flex; 
+            align-items: center; justify-content: space-between;
+            padding: 0 15px; position: sticky; top: 0; z-index: 1000;
+        }
+        .logo-box { background: #fff; padding: 4px 10px; border-radius: 4px; display: flex; align-items: center; }
+        .logo-box span { color: #ff1a75; font-weight: bold; font-size: 13px; }
+        .menu-icon { font-size: 24px; color: #fff; }
+
+        .main-content { padding: 40px 15px; text-align: center; }
+        .title { font-size: 28px; font-weight: 900; margin-bottom: 5px; }
+        .subtitle { font-size: 18px; font-weight: bold; color: #ffeb3b; margin-bottom: 25px; }
+
+        /* Khung nhập liệu bo tròn 100% giống mobile */
+        .form-card {
+            background: rgba(255, 255, 255, 0.15); border-radius: 15px;
+            padding: 25px 20px; max-width: 400px; margin: 0 auto;
+            backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.1);
+        }
+        .input-row { margin-bottom: 15px; display: flex; gap: 8px; }
+        input {
+            flex: 2; padding: 14px 18px; border-radius: 30px; border: none;
+            font-size: 16px; outline: none; background: #fff; color: #000;
+        }
+        select {
+            flex: 1; border-radius: 30px; border: none; padding: 10px;
+            background: #fff; font-size: 14px;
+        }
+        .btn-gui {
+            background: #ff1a75; color: #fff; border: none; width: 100%;
+            padding: 18px; font-size: 18px; font-weight: bold;
+            border-radius: 35px; cursor: pointer; text-transform: uppercase;
+            box-shadow: 0 5px 15px rgba(255, 26, 117, 0.4);
+        }
+
+        /* Overlay kết quả giống video */
+        .overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 10001; justify-content: center; align-items: center;
+        }
+        .result-box {
+            background: #fff; color: #333; width: 92%; max-width: 370px;
+            border-radius: 12px; padding: 25px 15px; text-align: center;
+            position: relative; animation: slideUp 0.3s ease-out;
+        }
+        @keyframes slideUp { from {transform: translateY(50px); opacity: 0;} to {transform: translateY(0); opacity: 1;} }
+        
+        .close-btn { position: absolute; top: 10px; right: 15px; font-size: 26px; color: #bbb; cursor: pointer; }
+        .res-header { color: #ff1a75; font-size: 20px; font-weight: bold; margin-bottom: 20px; }
+
+        /* Giao diện trái tim và tên đè lên y hệt video */
+        .heart-area { position: relative; width: 240px; height: 210px; margin: 0 auto; }
+        .heart-img { width: 100%; height: 100%; fill: #fff0f5; stroke: #ff1a75; stroke-width: 1.5; }
+        .percentage {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 50px; font-weight: 900; color: #ff1a75;
+        }
+        .name-p1 { position: absolute; left: -30px; top: 40%; font-weight: bold; font-size: 11px; width: 85px; text-align: right; line-height: 1.2; text-transform: uppercase; }
+        .name-p2 { position: absolute; right: -30px; top: 40%; font-weight: bold; font-size: 11px; width: 85px; text-align: left; line-height: 1.2; text-transform: uppercase; }
+
+        .advice-txt { margin-top: 25px; font-size: 13px; line-height: 1.6; color: #444; text-align: left; padding: 0 10px; }
+    </style>
+</head>
+<body>
+
+<div class="bg-animated"></div>
+
+<nav>
+    <div class="logo-box"><span>♥ BOITINHYEU.VN</span></div>
+    <div class="menu-icon">☰</div>
+</nav>
+
+<div class="main-content">
+    <div class="title">BÓI TÌNH YÊU</div>
+    <div class="subtitle">XEM TÌNH DUYÊN - CHÍNH XÁC NHẤT!</div>
+
+    <div class="form-card">
+        <div class="input-row">
+            <input type="text" id="n1" placeholder="Nhập tên bạn">
+            <select><option>Nam</option><option>Nữ</option></select>
+        </div>
+        <div class="input-row">
+            <input type="text" id="n2" placeholder="Nhập tên người ấy">
+            <select><option>Nữ</option><option>Nam</option></select>
+        </div>
+        <button class="btn-gui" onclick="startBoi()">GỬI ĐI</button>
+    </div>
+</div>
+
+<div id="resLayer" class="overlay">
+    <div class="result-box">
+        <span class="close-btn" onclick="document.getElementById('resLayer').style.display='none'">&times;</span>
+        <div class="res-header">BÓI TÌNH YÊU</div>
+        <p style="font-size: 11px; color: #777; margin-bottom: 25px;">Kết quả của công thức mà Dr.Love đã phát minh!</p>
+        
+        <div class="heart-area">
+            <div class="name-p1" id="showN1"></div>
+            <svg viewBox="0 0 32 29.6" class="heart-img">
+                <path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,16,21.2,16,21.2s16-11.8,16-21.2C32,3.8,28.2,0,23.6,0z"/>
+            </svg>
+            <div class="percentage" id="perc">0%</div>
+            <div class="name-p2" id="showN2"></div>
+        </div>
+
+        <div class="advice-txt" id="adv"></div>
+    </div>
+</div>
+
+<script>
+    function startBoi() {
+        let name1 = document.getElementById('n1').value.trim();
+        let name2 = document.getElementById('n2').value.trim();
+        if(!name1 || !name2) { alert("Thằng chó nhập tên vào!"); return; }
+
+        let n1L = name1.toLowerCase();
+        let n2L = name2.toLowerCase();
+        let p = 0;
+
+        // LOGIC CHỐT 100% CHO VINH & MY
+        const vinh = n1L.includes("vinh") || n2L.includes("vinh");
+        const my = n1L.includes("my") || n2L.includes("my");
+
+        if(vinh && my) {
+            p = 100;
+            document.getElementById('showN1').innerHTML = "ĐỖ<br>HOÀNG<br>VINH";
+            document.getElementById('showN2').innerHTML = "NGUYỄN<br>THỊ<br>DIỄM<br>MY";
+        } else {
+            let sum = 0;
+            for(let i=0; i<(n1L+n2L).length; i++) sum += (n1L+n2L).charCodeAt(i);
+            p = (sum % 30) + 65;
+            document.getElementById('showN1').innerText = name1.split(' ').pop();
+            document.getElementById('showN2').innerText = name2.split(' ').pop();
+        }
+
+        document.getElementById('resLayer').style.display = 'flex';
+        let current = 0;
+        let timer = setInterval(() => {
+            if(current >= p) {
+                clearInterval(timer);
+                let text = p === 100 ? 
+                "<b>Bác sĩ tình yêu</b> khẳng định đây là mối quan hệ định mệnh! Hai bạn sinh ra là để dành cho nhau, không gì có thể chia cắt." : 
+                "Mối quan hệ này có tỷ lệ hòa hợp khá tốt. Hãy cố gắng trân trọng và thấu hiểu nhau hơn nhé!";
+                document.getElementById('adv').innerHTML = text;
+            } else {
+                current++;
+                document.getElementById('perc').innerText = current + "%";
+            }
+        }, 20);
+    }
+</script>
+</body>
+</html>
